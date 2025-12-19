@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from sqlmodel import SQLModel
 from db.session import engine
 from api.routers.workflows import router as workflow_router
+from api.routers.execution import router as run_router
 
 app = FastAPI()
 
@@ -11,3 +12,4 @@ def on_startup():
     SQLModel.metadata.create_all(bind=engine)
 
 app.include_router(router=workflow_router)
+app.include_router(router=run_router)

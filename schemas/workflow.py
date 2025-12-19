@@ -29,7 +29,7 @@ class WorkflowBase(BaseModel):
 
 # for api -> creating a workflow
 class WorkflowCreate(WorkflowBase):
-    steps: List[WorkflowStepCreate] = []
+    steps: List[WorkflowStepCreate] = Field(default_factory=list)
 
 # for updating a workflow
 class WorkflowUpdate(BaseModel):
@@ -41,5 +41,14 @@ class WorkflowUpdate(BaseModel):
 # for api: Reading a workflow (response)
 class WorkflowRead(WorkflowBase):
     id: UUID
-    steps: List[WorkflowStepRead] = []
-    
+    steps: List[WorkflowStepRead] = Field(default_factory=list)
+
+# execution request/response schemas
+class WorkflowRunRequest(BaseModel):
+    input: dict = Field(default_factory=dict)
+
+class WorkflowRunResponse(BaseModel):
+    workflow_run_id: UUID
+    status: str
+    output: dict = Field(default_factory=dict)
+    error_messages: dict = Field(default_factory=dict)
